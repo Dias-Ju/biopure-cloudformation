@@ -1,0 +1,75 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  Stack AWS CloudFormation - Projeto BioPure
+  Cria um Bucket S3, uma Tabela DynamoDB e uma Role IAM para acesso entre os serviços.
+  Desenvolvido por Júlia Dias (Bootcamp AWS DIO)
+
+Resources:
+
+  BioPureBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: biopure-infraestrutura-demo
+      VersioningConfiguration:
+        Status: Enabled
+      Tags:
+        - Key: Projeto
+          Value: BioPure
+        - Key: Ambiente
+          Value: Desenvolvimento
+
+
+  BioPureTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: ProdutosBioPure
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+      Tags:
+        - Key: Projeto
+          Value: BioPure
+
+
+  BioPureIamRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: BioPureInfraRole
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: BioPureAccessPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:*
+                  - dynamodb:*
+                Resource: "*"
+      Tags:
+        - Key: Projeto
+          Value: BioPure
+
+Outputs:
+  BucketName:
+    Description: Nome do bucket S3 criado
+    Value: !Ref BioPureBucket
+
+  TableName:
+    Description: Nome da tabela DynamoDB criada
+    Value: !Ref BioPureTable
+
+  RoleName:
+    Description: Nome da Role IAM criada
+    Value: !Ref BioPureIamRole
