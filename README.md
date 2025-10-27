@@ -6,18 +6,6 @@ A stack criada automatiza a **configuração de serviços essenciais da AWS** �
 
 ---
 
-## Sumário
-
-1. [Objetivo do Projeto](#-objetivo-do-projeto)  
-2. [Arquitetura Criada](#-arquitetura-criada)  
-3. [Passo a Passo de Implementação](#️-passo-a-passo-de-implementação)  
-4. [Estrutura do Projeto](#-estrutura-do-projeto)  
-5. [Aprendizados](#-aprendizados)  
-6. [Evidências](#-evidências)  
-7. [Referências](#-referências)  
-
----
-
 ## Objetivo do Projeto
 
 - Aplicar conceitos de **Infraestrutura como Código (IaC)** na AWS;  
